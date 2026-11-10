@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/foundation.dart';
+import 'package:psito_games_ui/psito_games_ui.dart';
 
 import 'game_state.dart';
 
@@ -31,7 +32,9 @@ class GameController extends ChangeNotifier {
     int? number,
     this.suits = Suits.one,
     this.hintTime = const Duration(milliseconds: 1400),
-  }) : number = number ?? _randomNumber() {
+    SoundBoard? sounds,
+  }) : number = number ?? _randomNumber(),
+       sounds = sounds ?? GameSounds.shared {
     state = GameState.deal(this.number, suits);
   }
 
@@ -44,6 +47,13 @@ class GameController extends ChangeNotifier {
 
   /// How long a hint stays lit.
   final Duration hintTime;
+
+  /// Where the sounds of the table go.
+  final SoundBoard sounds;
+
+  /// When a moved card reaches its place, a little before the end of its
+  /// flight.
+  static const landing = Duration(milliseconds: 240);
 
   int number;
   Suits suits;
@@ -106,6 +116,7 @@ class GameController extends ChangeNotifier {
     _history.clear();
     _forgetHint();
     _calm();
+    sounds.play(GameSound.shuffle);
     notifyListeners();
   }
 
@@ -121,6 +132,7 @@ class GameController extends ChangeNotifier {
     dealt = false;
     _forgetHint();
     _calm();
+    sounds.play(GameSound.place);
     notifyListeners();
   }
 
@@ -147,6 +159,7 @@ class GameController extends ChangeNotifier {
   void _advance(GameState next, Set<int> moved, {bool dealing = false}) {
     final collected = next.nests.length - state.nests.length;
     _remember();
+    _sound(state, next, dealing: dealing);
     state = next;
     moves++;
     score = max(0, score - 1 + collected * nestPoints);
@@ -161,7 +174,37 @@ class GameController extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// The sounds of a move from [before] to [after]: the cards landing, a
+  /// card turning over, a sequence flying home and the end of the game.
+  void _sound(GameState before, GameState after, {required bool dealing}) {
+    if (dealing) {
+      sounds.play(GameSound.deal);
+    } else {
+      sounds.play(GameSound.place, delay: landing);
+    }
+    var end = landing;
+    if (after.nests.length > before.nests.length) {
+      end += const Duration(milliseconds: 200);
+      sounds.play(GameSound.gather, delay: end);
+    }
+    final turned = Iterable.generate(columnCount)
+        .any((i) => after.hidden[i] < before.hidden[i]);
+    if (turned) {
+      sounds.play(
+        GameSound.flip,
+        delay: end + const Duration(milliseconds: 120),
+      );
+    }
+    if (after.isWon) {
+      sounds.play(
+        GameSound.victory,
+        delay: end + const Duration(milliseconds: 700),
+      );
+    }
+  }
+
   void _reject(Iterable<PlayingCard> cards) {
+    sounds.play(GameSound.refuse);
     rejected = {for (final card in cards) card.id};
     rejectTick++;
     selected = null;
@@ -182,6 +225,7 @@ class GameController extends ChangeNotifier {
           ? DealRefusal.noCards
           : DealRefusal.emptyColumn;
       refusalTick++;
+      sounds.play(GameSound.refuse);
       selected = null;
       notifyListeners();
       return;
@@ -271,6 +315,7 @@ class GameController extends ChangeNotifier {
       hintedStock = false;
       stuck = true;
       refusalTick++;
+      sounds.play(GameSound.refuse);
       notifyListeners();
       return;
     }

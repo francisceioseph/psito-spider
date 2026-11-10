@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:psito_games_ui/psito_games_ui.dart';
 import 'package:psito_spider/src/game/game_controller.dart';
 import 'package:psito_spider/src/game/game_state.dart';
 
@@ -267,6 +268,32 @@ void main() {
       game.state = table(columns: [[card(_s, 9)]]);
       game.hint();
       expect(game.stuck, isTrue);
+    });
+
+    test('each move has its sound', () {
+      final sounds = RecordedSounds();
+      final game = GameController(number: 3, sounds: sounds);
+      game.deal();
+      expect(sounds.played, [GameSound.deal]);
+
+      sounds.clear();
+      game.state = table(columns: filler()..[0] = [], stock: [card(_h, 2)]);
+      game.deal();
+      expect(sounds.played, [GameSound.refuse]);
+
+      sounds.clear();
+      game.state = table(
+        columns: [
+          run(_s, 2),
+          [card(_s, 1)],
+        ],
+      );
+      game.moveCards(b, 1, a);
+      expect(sounds.played, [GameSound.place, GameSound.gather]);
+
+      sounds.clear();
+      game.newGame();
+      expect(sounds.played, [GameSound.shuffle]);
     });
 
     test('a new game can change the suits', () {
