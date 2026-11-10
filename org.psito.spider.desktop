@@ -1,0 +1,23 @@
+[Desktop Entry]
+Type=Application
+Name=Psito Spider
+GenericName=Spider Solitaire
+GenericName[pt]=Paciência Spider
+GenericName[es]=Solitario Spider
+GenericName[fr]=Réussite Spider
+GenericName[de]=Spider-Patience
+GenericName[ru]=Пасьянс «Паук»
+GenericName[zh]=蜘蛛纸牌
+Comment=Spider solitaire with cockatiels
+Comment[pt]=Paciência Spider com calopsitas
+Comment[es]=El solitario Spider con cacatúas ninfa
+Comment[fr]=La réussite Spider avec des calopsittes
+Comment[de]=Spider-Patience mit Nymphensittichen
+Comment[ru]=Пасьянс «Паук» с кореллами
+Comment[zh]=与玄凤鹦鹉一起玩的蜘蛛纸牌
+Exec=psito_spider
+Icon=org.psito.spider
+Terminal=false
+Categories=Game;CardGame;
+Keywords=spider;solitaire;cards;cockatiel;paciência;cartas;calopsita;
+StartupWMClass=org.psito.spider

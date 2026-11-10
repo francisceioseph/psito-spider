@@ -1,0 +1,104 @@
+{
+  "@@locale": "en",
+  "appTitle": "Psito Spider",
+  "youWon": "You won!",
+  "emptyColumn": "Empty column",
+  "nest": "Nest {number}",
+  "@nest": {
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+  "nestOf": "Nest {number}: {suit}",
+  "@nestOf": {
+    "placeholders": {
+      "number": {
+        "type": "int"
+      },
+      "suit": {
+        "type": "String"
+      }
+    }
+  },
+  "cardName": "{rank} of {suit}",
+  "@cardName": {
+    "placeholders": {
+      "rank": {
+        "type": "String"
+      },
+      "suit": {
+        "type": "String"
+      }
+    }
+  },
+  "rankAce": "Ace",
+  "rankJack": "Jack",
+  "rankQueen": "Queen",
+  "rankKing": "King",
+  "suitClubs": "clubs",
+  "suitSpades": "spades",
+  "suitHearts": "hearts",
+  "suitDiamonds": "diamonds",
+  "winSummary": "{points} in {time}",
+  "@winSummary": {
+    "placeholders": {
+      "points": {
+        "type": "String"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "howToPlayBody": "Build eight sequences from King down to Ace, each in a single suit. A complete sequence flies to a nest by itself, and eight nests win the game.\n\nIn the columns, any card goes on a card one rank higher, whatever the suit. But only cards of the same suit, in order, move together. Anything can go to an empty column.\n\nClick the stock to deal one more card on each column. It only deals when no column is empty.\n\nOne suit is the gentlest game, two suits are harder, and four suits are a real challenge.\n\nPoints: 500 to start, minus 1 for each move and plus 100 for each nest.\n\nH shows a move, D deals, Ctrl+Z undoes, Ctrl+R restarts this game and Ctrl+N starts a new one.",
+  "aboutBody": "Spider solitaire with cockatiels. No ads, no telemetry and no account.",
+  "aboutLegal": "Code under the Apache 2.0 license. Card art under CC0.",
+  "points": "{count, plural, =1{1 point} other{{count} points}}",
+  "@points": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "statScore": "Points",
+  "dealRow": "{count, plural, =1{Deal the last row} other{Deal a row, {count} left}}",
+  "@dealRow": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "stockEmpty": "No more cards to deal",
+  "faceDownCard": "Face-down card",
+  "fillEmptyColumns": "Fill every empty column before dealing.",
+  "noMoreCards": "There are no more cards to deal.",
+  "noMoves": "No useful move left. Try undoing a few moves.",
+  "hint": "Show a move",
+  "deal": "Deal",
+  "suitCount": "{count, plural, =1{1 suit} other{{count} suits}}",
+  "@suitCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "easy": "easy",
+  "medium": "medium",
+  "hard": "hard",
+  "suitsChoice": "{suits}, {level}",
+  "@suitsChoice": {
+    "placeholders": {
+      "suits": {
+        "type": "String"
+      },
+      "level": {
+        "type": "String"
+      }
+    }
+  }
+}
